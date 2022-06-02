@@ -1,0 +1,223 @@
+[2022-06-02 16:31:40.342534] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#no crypto map AUTOVPN 10 ipsec-isakmp
+SITE_A(config-if)#no crypto map AUTOVPN
+SITE_A(config-if)#no crypto isakmp policy 10
+Protection suite of priority 10 not found
+SITE_A(config)#no crypto isakmp key 0 pass@123 address 192.168.3.10
+ISAKMP: no key for address 192.168.3.10
+SITE_A(config)#no crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+Transform-set AUTOVPN is in use by the crypto-map(s) / ipsec-profile(s):  AUTOVPN
+First remove the transform-set from the above crypto map(s)/profile(s).
+SITE_A(config)#no access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#no ip route 0.0.0.0 0.0.0.0 192.168.1.1
+%No matching route to delete
+SITE_A(config)#no access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#no access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#no ip nat inside source list 110 interface e0/1 overload
+%Dynamic mapping not found
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#no ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#no ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-06-02 16:32:02.114444] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#no crypto map AUTOVPN 10 ipsec-isakmp
+SITE_B(config-if)#no crypto map AUTOVPN
+SITE_B(config-if)#no crypto isakmp policy 10
+SITE_B(config)#no crypto isakmp key 0 pass@123 address 192.168.1.10
+ISAKMP: no key for address 192.168.1.10
+SITE_B(config)#no crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+Transform-set AUTOVPN is in use by the crypto-map(s) / ipsec-profile(s):  AUTOVPN, AUTOVPN
+First remove the transform-set from the above crypto map(s)/profile(s).
+SITE_B(config)#no access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#no ip route 0.0.0.0 0.0.0.0 192.168.3.1
+%No matching route to delete
+SITE_B(config)#no access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#no access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#no ip nat inside source list 110 interface e0/1 overload
+%Dynamic mapping not found
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#no ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#no ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-06-02 16:38:48.241486] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#no crypto map AUTOVPN 10 ipsec-isakmp
+SITE_A(config-if)#no crypto map AUTOVPN
+SITE_A(config-if)#no crypto isakmp policy 10
+Protection suite of priority 10 not found
+SITE_A(config)#no crypto isakmp key 0 pass@123 address 192.168.3.10
+ISAKMP: no key for address 192.168.3.10
+SITE_A(config)#no crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+Transform-set AUTOVPN is in use by the crypto-map(s) / ipsec-profile(s):  AUTOVPN
+First remove the transform-set from the above crypto map(s)/profile(s).
+SITE_A(config)#no access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#no ip route 0.0.0.0 0.0.0.0 192.168.1.1
+%No matching route to delete
+SITE_A(config)#no access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#no access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#no ip nat inside source list 110 interface e0/1 overload
+%Dynamic mapping not found
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#no ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#no ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-06-02 16:38:53.173731] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#no crypto map AUTOVPN 20 ipsec-isakmp
+SITE_B(config-if)#no crypto map AUTOVPN
+SITE_B(config-if)#no crypto isakmp policy 20
+Protection suite of priority 20 not found
+SITE_B(config)#no crypto isakmp key 0 pass@123 address 192.168.1.10
+ISAKMP: no key for address 192.168.1.10
+SITE_B(config)#no crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+Transform-set AUTOVPN is in use by the crypto-map(s) / ipsec-profile(s):  AUTOVPN, AUTOVPN
+First remove the transform-set from the above crypto map(s)/profile(s).
+SITE_B(config)#no access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#no ip route 0.0.0.0 0.0.0.0 192.168.3.1
+%No matching route to delete
+SITE_B(config)#no access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#no access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#no ip nat inside source list 110 interface e0/1 overload
+%Dynamic mapping not found
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#no ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#no ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-06-02 16:41:29.674694] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#no crypto map AUTOVPN 10 ipsec-isakmp
+SITE_A(config-if)#no crypto map AUTOVPN
+SITE_A(config-if)#no crypto isakmp policy 10
+Protection suite of priority 10 not found
+SITE_A(config)#no crypto isakmp key 0 pass@123 address 192.168.3.10
+ISAKMP: no key for address 192.168.3.10
+SITE_A(config)#no crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+Transform-set AUTOVPN is in use by the crypto-map(s) / ipsec-profile(s):  AUTOVPN
+First remove the transform-set from the above crypto map(s)/profile(s).
+SITE_A(config)#no access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#no ip route 0.0.0.0 0.0.0.0 192.168.1.1
+%No matching route to delete
+SITE_A(config)#no access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#no access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#no ip nat inside source list 110 interface e0/1 overload
+%Dynamic mapping not found
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#no ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#no ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-06-02 16:41:45.581102] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#no crypto map AUTOVPN 10 ipsec-isakmp
+SITE_B(config-if)#no crypto map AUTOVPN
+SITE_B(config-if)#no crypto isakmp policy 10
+Protection suite of priority 10 not found
+SITE_B(config)#no crypto isakmp key 0 pass@123 address 192.168.1.10
+ISAKMP: no key for address 192.168.1.10
+SITE_B(config)#no crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+Transform-set AUTOVPN is in use by the crypto-map(s) / ipsec-profile(s):  AUTOVPN, AUTOVPN
+First remove the transform-set from the above crypto map(s)/profile(s).
+SITE_B(config)#no access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#no ip route 0.0.0.0 0.0.0.0 192.168.3.1
+%No matching route to delete
+SITE_B(config)#no access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#no access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#no ip nat inside source list 110 interface e0/1 overload
+%Dynamic mapping not found
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#no ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#no ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-06-02 16:42:21.679425] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#no crypto map AUTOVPN 10 ipsec-isakmp
+SITE_A(config-if)#no crypto map AUTOVPN
+SITE_A(config-if)#no crypto isakmp policy 10
+Protection suite of priority 10 not found
+SITE_A(config)#no crypto isakmp key 0 pass@123 address 192.168.3.10
+ISAKMP: no key for address 192.168.3.10
+SITE_A(config)#no crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+Transform-set AUTOVPN is in use by the crypto-map(s) / ipsec-profile(s):  AUTOVPN
+First remove the transform-set from the above crypto map(s)/profile(s).
+SITE_A(config)#no access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#no ip route 0.0.0.0 0.0.0.0 192.168.1.1
+%No matching route to delete
+SITE_A(config)#no access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#no access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#no ip nat inside source list 110 interface e0/1 overload
+%Dynamic mapping not found
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#no ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#no ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-06-02 16:42:26.633054] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#no crypto map AUTOVPN 20 ipsec-isakmp
+SITE_B(config-if)#no crypto map AUTOVPN
+SITE_B(config-if)#no crypto isakmp policy 20
+Protection suite of priority 20 not found
+SITE_B(config)#no crypto isakmp key 0 pass@123 address 192.168.1.10
+ISAKMP: no key for address 192.168.1.10
+SITE_B(config)#no crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+Transform-set AUTOVPN is in use by the crypto-map(s) / ipsec-profile(s):  AUTOVPN, AUTOVPN
+First remove the transform-set from the above crypto map(s)/profile(s).
+SITE_B(config)#no access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#no ip route 0.0.0.0 0.0.0.0 192.168.3.1
+%No matching route to delete
+SITE_B(config)#no access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#no access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#no ip nat inside source list 110 interface e0/1 overload
+%Dynamic mapping not found
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#no ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#no ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

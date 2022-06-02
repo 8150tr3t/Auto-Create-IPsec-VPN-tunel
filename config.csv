@@ -1,0 +1,26 @@
+﻿,SITE A,SITE B
+ssh_ip,192.168.52.101,192.168.52.102
+ssh_user,admin,admin
+ssh_pass,123456,
+ssh_device_type,cisco_ios,cisco_ios
+vpn_ip_site,192.168.10.0,192.168.20.0
+vpn_prefix_site,24,24
+vpn_ip_peer,192.168.20.0,192.168.10.0
+vpn_prefix_peer,24,24
+isakmp_policy_number,10,10
+isakmp_hash,md5,md5
+isakmp_encryption,des,des
+isakmp_group,2,2
+isakmp_authentication,pre-share,pre-share
+isakmp_key,0,0
+isakmp_pass,pass@123,pass@123
+isakmp_peer,192.168.3.10,192.168.1.10
+ipsec_transform_set_name,AUTOVPN,AUTOVPN
+ipsec_transform_set_1,esp-md5-hmac,esp-md5-hmac
+ipsec_transform_set_2,esp-des,esp-des
+acl_permit,100,100
+public_int,e0/1,e0/1
+ip_route,192.168.1.1,192.168.3.1
+nat_acl_number,110,110
+nat_int_inside,e0/0,e0/0
+nat_int_outside,e0/1,e0/1

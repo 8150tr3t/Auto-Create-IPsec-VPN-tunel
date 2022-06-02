@@ -1,0 +1,78 @@
+[
+{
+        "SITE A": {
+            "ssh": {
+                "ip": "192.168.52.101",
+                "user": "admin",
+                "pass": "123456",
+                "device_type": "cisco_ios"
+            },
+            "vpn": {
+                "ip_site": "192.168.10.0",
+                "prefix_site": 24,
+                "ip_peer": "192.168.20.0",
+                "prefix_peer": 24
+            },
+            "isakmp": {
+                "policy_number": 10,
+                "hash": "md5",
+                "encryption": "des",
+                "group": 2,
+                "authentication": "pre-share",
+                "key": 0,
+                "pass": "pass@123",
+                "peer": "192.168.3.10"
+            },
+            "ipsec": {
+                "transform_set_name": "AUTOVPN",
+                "transform_set_1": "esp-md5-hmac",
+                "transform_set_2": "esp-des"
+            },
+            "acl_permit": "100",
+            "public_int": "e0/1",
+            "ip_route": "192.168.1.1",
+            "nat": {
+                "acl_number": 110,
+                "int_inside": "e0/0",
+                "int_outside": "e0/1"
+            }
+        },
+        "SITE B": {
+            "ssh": {
+                "ip": "192.168.52.102",
+                "user": "admin",
+                "pass": 123456,
+                "device_type": "cisco_ios"
+            },
+            "vpn": {
+                "ip_site": "192.168.20.0",
+                "prefix_site": 24,
+                "ip_peer": "192.168.10.0",
+                "prefix_peer": 24
+            },
+            "isakmp": {
+                "policy_number": 20,
+                "hash": "md5",
+                "encryption": "des",
+                "group": 2,
+                "authentication": "pre-share",
+                "key": 0,
+                "pass": "pass@123",
+                "peer": "192.168.1.10"
+            },
+            "ipsec": {
+                "transform_set_name": "AUTOVPN",
+                "transform_set_1": "esp-md5-hmac",
+                "transform_set_2": "esp-des"
+            },
+            "acl_permit": "100",
+            "public_int": "e0/1",
+            "ip_route": "192.168.3.1",
+            "nat": {
+                "acl_number": 110,
+                "int_inside": "e0/0",
+                "int_outside": "e0/1"
+            }
+        }
+    }
+]

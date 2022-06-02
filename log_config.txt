@@ -1,0 +1,604 @@
+[2022-05-23 10:50:07.790774] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#crypto isakmp policy 10
+SITE_A(config-isakmp)#hash md5
+SITE_A(config-isakmp)#encryption des
+SITE_A(config-isakmp)#group 2
+SITE_A(config-isakmp)#authentication pre-share
+SITE_A(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.3.10
+SITE_A(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_A(cfg-crypto-trans)#access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#crypto map AUTOVPN 10 ipsec-isakmp
+SITE_A(config-crypto-map)#set peer 192.168.3.10
+SITE_A(config-crypto-map)#set transform-set AUTOVPN
+SITE_A(config-crypto-map)#match address 100
+SITE_A(config-crypto-map)#interface e0/1
+SITE_A(config-if)#crypto map AUTOVPN
+SITE_A(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.1.1
+SITE_A(config)#access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-23 10:50:11.112996] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#crypto isakmp policy 20
+SITE_B(config-isakmp)#hash md5
+SITE_B(config-isakmp)#encryption des
+SITE_B(config-isakmp)#group 2
+SITE_B(config-isakmp)#authentication pre-share
+SITE_B(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.1.10
+SITE_B(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_B(cfg-crypto-trans)#access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#crypto map AUTOVPN 20 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_B(config-crypto-map)#set peer 192.168.1.10
+SITE_B(config-crypto-map)#set transform-set AUTOVPN
+SITE_B(config-crypto-map)#match address 100
+SITE_B(config-crypto-map)#interface e0/1
+SITE_B(config-if)#crypto map AUTOVPN
+SITE_B(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.3.1
+SITE_B(config)#access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-26 10:02:45.618928] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#crypto isakmp policy 10
+SITE_A(config-isakmp)#hash md5
+SITE_A(config-isakmp)#encryption des
+SITE_A(config-isakmp)#group 2
+SITE_A(config-isakmp)#authentication pre-share
+SITE_A(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.3.10
+SITE_A(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_A(cfg-crypto-trans)#access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#crypto map AUTOVPN 10 ipsec-isakmp
+SITE_A(config-crypto-map)#set peer 192.168.3.10
+SITE_A(config-crypto-map)#set transform-set AUTOVPN
+SITE_A(config-crypto-map)#match address 100
+SITE_A(config-crypto-map)#interface e0/1
+SITE_A(config-if)#crypto map AUTOVPN
+SITE_A(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.1.1
+SITE_A(config)#access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-26 10:02:48.940374] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#crypto isakmp policy 20
+SITE_B(config-isakmp)#hash md5
+SITE_B(config-isakmp)#encryption des
+SITE_B(config-isakmp)#group 2
+SITE_B(config-isakmp)#authentication pre-share
+SITE_B(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.1.10
+SITE_B(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_B(cfg-crypto-trans)#access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#crypto map AUTOVPN 20 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_B(config-crypto-map)#set peer 192.168.1.10
+SITE_B(config-crypto-map)#set transform-set AUTOVPN
+SITE_B(config-crypto-map)#match address 100
+SITE_B(config-crypto-map)#interface e0/1
+SITE_B(config-if)#crypto map AUTOVPN
+SITE_B(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.3.1
+SITE_B(config)#access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-26 11:07:33.951953] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#crypto isakmp policy 10
+SITE_A(config-isakmp)#hash md5
+SITE_A(config-isakmp)#encryption des
+SITE_A(config-isakmp)#group 2
+SITE_A(config-isakmp)#authentication pre-share
+SITE_A(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.3.10
+SITE_A(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_A(cfg-crypto-trans)#access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#crypto map AUTOVPN 10 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_A(config-crypto-map)#set peer 192.168.3.10
+SITE_A(config-crypto-map)#set transform-set AUTOVPN
+SITE_A(config-crypto-map)#match address 100
+SITE_A(config-crypto-map)#interface e0/1
+SITE_A(config-if)#crypto map AUTOVPN
+SITE_A(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.1.1
+SITE_A(config)#access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-26 11:07:37.392817] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#crypto isakmp policy 10
+SITE_B(config-isakmp)#hash md5
+SITE_B(config-isakmp)#encryption des
+SITE_B(config-isakmp)#group 2
+SITE_B(config-isakmp)#authentication pre-share
+SITE_B(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.1.10
+SITE_B(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_B(cfg-crypto-trans)#access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#crypto map AUTOVPN 10 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_B(config-crypto-map)#set peer 192.168.1.10
+SITE_B(config-crypto-map)#set transform-set AUTOVPN
+SITE_B(config-crypto-map)#match address 100
+SITE_B(config-crypto-map)#interface e0/1
+SITE_B(config-if)#crypto map AUTOVPN
+SITE_B(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.3.1
+SITE_B(config)#access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-26 11:14:47.923572] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#crypto isakmp policy 10
+SITE_A(config-isakmp)#hash md5
+SITE_A(config-isakmp)#encryption des
+SITE_A(config-isakmp)#group 2
+SITE_A(config-isakmp)#authentication pre-share
+SITE_A(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.3.10
+SITE_A(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_A(cfg-crypto-trans)#access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#crypto map AUTOVPN 10 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_A(config-crypto-map)#set peer 192.168.3.10
+SITE_A(config-crypto-map)#set transform-set AUTOVPN
+SITE_A(config-crypto-map)#match address 100
+SITE_A(config-crypto-map)#interface e0/1
+SITE_A(config-if)#crypto map AUTOVPN
+SITE_A(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.1.1
+SITE_A(config)#access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-26 11:14:53.916411] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#crypto isakmp policy 10
+SITE_B(config-isakmp)#hash md5
+SITE_B(config-isakmp)#encryption des
+SITE_B(config-isakmp)#group 2
+SITE_B(config-isakmp)#authentication pre-share
+SITE_B(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.1.10
+SITE_B(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_B(cfg-crypto-trans)#access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#crypto map AUTOVPN 10 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_B(config-crypto-map)#set peer 192.168.1.10
+SITE_B(config-crypto-map)#set transform-set AUTOVPN
+SITE_B(config-crypto-map)#match address 100
+SITE_B(config-crypto-map)#interface e0/1
+SITE_B(config-if)#crypto map AUTOVPN
+SITE_B(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.3.1
+SITE_B(config)#access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-26 11:30:32.798591] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#crypto isakmp policy 10
+SITE_A(config-isakmp)#hash md5
+SITE_A(config-isakmp)#encryption des
+SITE_A(config-isakmp)#group 2
+SITE_A(config-isakmp)#authentication pre-share
+SITE_A(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.3.10
+SITE_A(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_A(cfg-crypto-trans)#access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#crypto map AUTOVPN 10 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_A(config-crypto-map)#set peer 192.168.3.10
+SITE_A(config-crypto-map)#set transform-set AUTOVPN
+SITE_A(config-crypto-map)#match address 100
+SITE_A(config-crypto-map)#interface e0/1
+SITE_A(config-if)#crypto map AUTOVPN
+SITE_A(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.1.1
+SITE_A(config)#access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-26 11:30:35.865752] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#crypto isakmp policy 20
+SITE_B(config-isakmp)#hash md5
+SITE_B(config-isakmp)#encryption des
+SITE_B(config-isakmp)#group 2
+SITE_B(config-isakmp)#authentication pre-share
+SITE_B(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.1.10
+SITE_B(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_B(cfg-crypto-trans)#access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#crypto map AUTOVPN 20 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_B(config-crypto-map)#set peer 192.168.1.10
+SITE_B(config-crypto-map)#set transform-set AUTOVPN
+SITE_B(config-crypto-map)#match address 100
+SITE_B(config-crypto-map)#interface e0/1
+SITE_B(config-if)#crypto map AUTOVPN
+SITE_B(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.3.1
+SITE_B(config)#access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-26 11:36:21.431665] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#crypto isakmp policy 10
+SITE_A(config-isakmp)#hash md5
+SITE_A(config-isakmp)#encryption des
+SITE_A(config-isakmp)#group 2
+SITE_A(config-isakmp)#authentication pre-share
+SITE_A(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.3.10
+SITE_A(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_A(cfg-crypto-trans)#access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#crypto map AUTOVPN 10 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_A(config-crypto-map)#set peer 192.168.3.10
+SITE_A(config-crypto-map)#set transform-set AUTOVPN
+SITE_A(config-crypto-map)#match address 100
+SITE_A(config-crypto-map)#interface e0/1
+SITE_A(config-if)#crypto map AUTOVPN
+SITE_A(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.1.1
+SITE_A(config)#access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-26 11:36:26.674023] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#crypto isakmp policy 20
+SITE_B(config-isakmp)#hash md5
+SITE_B(config-isakmp)#encryption des
+SITE_B(config-isakmp)#group 2
+SITE_B(config-isakmp)#authentication pre-share
+SITE_B(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.1.10
+SITE_B(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_B(cfg-crypto-trans)#access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#crypto map AUTOVPN 20 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_B(config-crypto-map)#set peer 192.168.1.10
+SITE_B(config-crypto-map)#set transform-set AUTOVPN
+SITE_B(config-crypto-map)#match address 100
+SITE_B(config-crypto-map)#interface e0/1
+SITE_B(config-if)#crypto map AUTOVPN
+SITE_B(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.3.1
+SITE_B(config)#access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-27 15:40:13.011818] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#crypto isakmp policy 10
+SITE_A(config-isakmp)#hash md5
+SITE_A(config-isakmp)#encryption des
+SITE_A(config-isakmp)#group 2
+SITE_A(config-isakmp)#authentication pre-share
+SITE_A(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.3.10
+SITE_A(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_A(cfg-crypto-trans)#access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#crypto map AUTOVPN 10 ipsec-isakmp
+SITE_A(config-crypto-map)#set peer 192.168.3.10
+SITE_A(config-crypto-map)#set transform-set AUTOVPN
+SITE_A(config-crypto-map)#match address 100
+SITE_A(config-crypto-map)#interface e0/1
+SITE_A(config-if)#crypto map AUTOVPN
+SITE_A(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.1.1
+SITE_A(config)#access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-27 15:40:18.395197] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#crypto isakmp policy 20
+SITE_B(config-isakmp)#hash md5
+SITE_B(config-isakmp)#encryption des
+SITE_B(config-isakmp)#group 2
+SITE_B(config-isakmp)#authentication pre-share
+SITE_B(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.1.10
+SITE_B(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_B(cfg-crypto-trans)#access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#crypto map AUTOVPN 20 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_B(config-crypto-map)#set peer 192.168.1.10
+SITE_B(config-crypto-map)#set transform-set AUTOVPN
+SITE_B(config-crypto-map)#match address 100
+SITE_B(config-crypto-map)#interface e0/1
+SITE_B(config-if)#crypto map AUTOVPN
+SITE_B(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.3.1
+SITE_B(config)#access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-27 15:50:01.139165] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#crypto isakmp policy 10
+SITE_A(config-isakmp)#hash md5
+SITE_A(config-isakmp)#encryption des
+SITE_A(config-isakmp)#group 2
+SITE_A(config-isakmp)#authentication pre-share
+SITE_A(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.3.10
+SITE_A(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_A(cfg-crypto-trans)#access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#crypto map AUTOVPN 10 ipsec-isakmp
+SITE_A(config-crypto-map)#set peer 192.168.3.10
+SITE_A(config-crypto-map)#set transform-set AUTOVPN
+SITE_A(config-crypto-map)#match address 100
+SITE_A(config-crypto-map)#interface e0/1
+SITE_A(config-if)#crypto map AUTOVPN
+SITE_A(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.1.1
+SITE_A(config)#access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-05-27 15:50:06.348679] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#crypto isakmp policy 20
+SITE_B(config-isakmp)#hash md5
+SITE_B(config-isakmp)#encryption des
+SITE_B(config-isakmp)#group 2
+SITE_B(config-isakmp)#authentication pre-share
+SITE_B(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.1.10
+SITE_B(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_B(cfg-crypto-trans)#access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#crypto map AUTOVPN 20 ipsec-isakmp
+SITE_B(config-crypto-map)#set peer 192.168.1.10
+SITE_B(config-crypto-map)#set transform-set AUTOVPN
+SITE_B(config-crypto-map)#match address 100
+SITE_B(config-crypto-map)#interface e0/1
+SITE_B(config-if)#crypto map AUTOVPN
+SITE_B(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.3.1
+SITE_B(config)#access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-06-02 16:14:31.485120] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#crypto isakmp policy 10
+SITE_A(config-isakmp)#hash md5
+SITE_A(config-isakmp)#encryption des
+SITE_A(config-isakmp)#group 2
+SITE_A(config-isakmp)#authentication pre-share
+SITE_A(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.3.10
+SITE_A(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_A(cfg-crypto-trans)#access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#crypto map AUTOVPN 10 ipsec-isakmp
+SITE_A(config-crypto-map)#set peer 192.168.3.10
+SITE_A(config-crypto-map)#set transform-set AUTOVPN
+SITE_A(config-crypto-map)#match address 100
+SITE_A(config-crypto-map)#interface e0/1
+SITE_A(config-if)#crypto map AUTOVPN
+SITE_A(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.1.1
+SITE_A(config)#access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-06-02 16:14:37.023349] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#crypto isakmp policy 20
+SITE_B(config-isakmp)#hash md5
+SITE_B(config-isakmp)#encryption des
+SITE_B(config-isakmp)#group 2
+SITE_B(config-isakmp)#authentication pre-share
+SITE_B(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.1.10
+SITE_B(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_B(cfg-crypto-trans)#access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#crypto map AUTOVPN 20 ipsec-isakmp
+% NOTE: This new crypto map will remain disabled until a peer
+	and a valid access list have been configured.
+SITE_B(config-crypto-map)#set peer 192.168.1.10
+SITE_B(config-crypto-map)#set transform-set AUTOVPN
+SITE_B(config-crypto-map)#match address 100
+SITE_B(config-crypto-map)#interface e0/1
+SITE_B(config-if)#crypto map AUTOVPN
+SITE_B(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.3.1
+SITE_B(config)#access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-06-02 16:42:50.158037] SITE A:192.168.52.101
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_A(config)#crypto isakmp policy 10
+SITE_A(config-isakmp)#hash md5
+SITE_A(config-isakmp)#encryption des
+SITE_A(config-isakmp)#group 2
+SITE_A(config-isakmp)#authentication pre-share
+SITE_A(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.3.10
+SITE_A(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_A(cfg-crypto-trans)#access-list 100 permit ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#crypto map AUTOVPN 10 ipsec-isakmp
+SITE_A(config-crypto-map)#set peer 192.168.3.10
+SITE_A(config-crypto-map)#set transform-set AUTOVPN
+SITE_A(config-crypto-map)#match address 100
+SITE_A(config-crypto-map)#interface e0/1
+SITE_A(config-if)#crypto map AUTOVPN
+SITE_A(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.1.1
+SITE_A(config)#access-list 110 deny ip 192.168.10.0 0.0.0.255 192.168.20.0 0.0.0.255
+SITE_A(config)#access-list 110 permit ip 192.168.10.0 0.0.0.255 any
+SITE_A(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_A(config)#interface e0/1
+SITE_A(config-if)#ip nat outside
+SITE_A(config-if)#interface e0/0
+SITE_A(config-if)#ip nat inside
+SITE_A(config-if)#end
+SITE_A#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[2022-06-02 16:42:55.622663] SITE B:192.168.52.102
+configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+SITE_B(config)#crypto isakmp policy 20
+SITE_B(config-isakmp)#hash md5
+SITE_B(config-isakmp)#encryption des
+SITE_B(config-isakmp)#group 2
+SITE_B(config-isakmp)#authentication pre-share
+SITE_B(config-isakmp)#crypto isakmp key 0 pass@123 address 192.168.1.10
+SITE_B(config)#crypto ipsec transform-set AUTOVPN esp-md5-hmac esp-des
+SITE_B(cfg-crypto-trans)#access-list 100 permit ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#crypto map AUTOVPN 20 ipsec-isakmp
+SITE_B(config-crypto-map)#set peer 192.168.1.10
+SITE_B(config-crypto-map)#set transform-set AUTOVPN
+SITE_B(config-crypto-map)#match address 100
+SITE_B(config-crypto-map)#interface e0/1
+SITE_B(config-if)#crypto map AUTOVPN
+SITE_B(config-if)#ip route 0.0.0.0 0.0.0.0 192.168.3.1
+SITE_B(config)#access-list 110 deny ip 192.168.20.0 0.0.0.255 192.168.10.0 0.0.0.255
+SITE_B(config)#access-list 110 permit ip 192.168.20.0 0.0.0.255 any
+SITE_B(config)#ip nat inside source list 110 interface e0/1 overload
+SITE_B(config)#interface e0/1
+SITE_B(config-if)#ip nat outside
+SITE_B(config-if)#interface e0/0
+SITE_B(config-if)#ip nat inside
+SITE_B(config-if)#end
+SITE_B#
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
